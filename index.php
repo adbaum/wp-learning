@@ -157,5 +157,5 @@
       </div>
     </div>
   </body>
-  <script src="./animate.js"></script>
+  <script src="why.js"></script>
 </html>
