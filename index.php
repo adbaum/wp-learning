@@ -1,67 +1,161 @@
-<?php
-/**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
- * @version 1.0
- */
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SVG tween line example</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <style>
 
-get_header(); ?>
+      html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}body {line-height: 1;}ol, ul {list-style: none;}blockquote, q {quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}table {border-collapse: collapse;border-spacing: 0;}a {text-decoration:none;color:inherit;}
 
-<div class="wrap">
-	<?php if ( is_home() && ! is_front_page() ) : ?>
-		<header class="page-header">
-			<h1 class="page-title"><?php single_post_title(); ?></h1>
-		</header>
-	<?php else : ?>
-	<header class="page-header">
-		<h2 class="page-title"><?php _e( 'Posts', 'twentyseventeen' ); ?></h2>
-	</header>
-	<?php endif; ?>
+      .container {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+      }
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+      .foreground svg {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        max-height: 75vh;
+        transform: translate(-50%, -50%);
+      }
 
-			<?php
-			if ( have_posts() ) :
+      .details {
+        stroke-width: 5;
+      }
 
-				/* Start the Loop */
-				while ( have_posts() ) : the_post();
+      /* text */
 
-					/*
-					 * Include the Post-Format-specific template for the content.
-					 * If you want to override this in a child theme, then include a file
-					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-					 */
-					get_template_part( 'template-parts/post/content', get_post_format() );
+      .text {
+        position: absolute;
+        width: auto;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+      }
 
-				endwhile;
+      .hero {
+        position: relative;
+        margin: -55px 0px -50px -30px;
+      }
 
-				the_posts_pagination( array(
-					'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-					'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
-					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
-				) );
+      .hero h1 {
+        font-size: 30em;
+      }
 
-			else :
+      .body {
+        font-size: 3em;
+        line-height: 1.2em;
+        max-width: 80%;
+      }
 
-				get_template_part( 'template-parts/post/content', 'none' );
+      @media (max-width: 950px) {
+        .hero {
+          position: relative;
+          margin: -55px 0px -30px -20px;
+        }
 
-			endif;
-			?>
+        .hero h1 {
+          font-size: 20em;
+        }
 
-		</main><!-- #main -->
-	</div><!-- #primary -->
-	<?php get_sidebar(); ?>
-</div><!-- .wrap -->
+        .body {
+          font-size: 2em;
+          line-height: 1.2em;
+        }
+      }
 
-<?php get_footer();
+      @media (max-width: 650px) {
+        .hero {
+          position: relative;
+          margin: -55px 0px -20px -15px;
+        }
+
+        .hero h1 {
+          font-size: 15em;
+        }
+
+        .body {
+          font-size: 1.5em;
+          line-height: 1.2em;
+        }
+      }
+
+      @media (max-width: 470px) {
+        .hero {
+          position: relative;
+          margin: -55px 0px -20px -10px;
+        }
+
+        .hero h1 {
+          font-size: 13em;
+        }
+
+        .body {
+          font-size: 1.5em;
+          line-height: 1.2em;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .hero {
+          position: relative;
+          margin: -55px 0px -20px -15px;
+        }
+
+        .hero h1 {
+          font-size: 12em;
+        }
+
+        .body {
+          font-size: 1.5em;
+          line-height: 1.2em;
+        	max-width: 100%;
+
+        }
+
+        .details {
+          stroke-width: 3;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text">
+        <div class="hero">
+         <h1><?php bloginfo('name'); ?></h1>
+        </div>
+        <div class="body">
+        	<?php bloginfo('description'); ?>
+        </div>
+      </div>
+      <div class="foreground">
+        <svg
+          preserveAspectRatio="none"
+          stroke-dasharray="15, 5"
+          x="0"
+          y="0"
+          width="100%"
+          viewBox="0 0 1056.24 630.48"
+        >
+          <path
+            class="details"
+            fill="none"
+            id="path"
+            stroke="rgb( 255, 24, 0 )"
+            vector-effect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
+    </div>
+  </body>
+  <script src="./animate.js"></script>
+</html>
